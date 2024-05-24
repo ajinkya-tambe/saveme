@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Calculator</title>
+    <!-- Add Bootstrap and jQuery CDN links here -->
+</head>
+<body>
+    <div class="container mt-5">
+        <form method="post" action="{% url 'calculate_bill' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="units_consumed" class="form-label">Enter Units Consumed:</label>
+                <input type="number" class="form-control" id="units_consumed" name="units_consumed" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate Bill</button>
+        </form>
+    </div>
+</body>
+</html>

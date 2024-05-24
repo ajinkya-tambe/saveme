@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your CV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        #main-container {
+            position: relative;
+            width: 80%;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            z-index: 1;
+            border-radius: 20px;
+            height: 80vh; /* Set a fixed height, adjust as needed */
+            overflow-y: auto; /* Enable vertical scrollbar when content exceeds the height */
+            height: 80vh;
+            overflow-y: scroll; /* Enable vertical scrolling */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: transparent transparent; /* For Firefox */
+            -ms-overflow-style: none; /* For IE and Edge */
+        }
+
+        #main-container::-webkit-scrollbar {
+            width: 6px; /* For Chrome, Safari, and Opera */
+        }
+
+        #main-container::-webkit-scrollbar-thumb {
+            background-color: transparent; /* For Chrome, Safari, and Opera */
+        }
+    
+        #contactInfo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #contactInfo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        #contactInfo .personal-info {
+            display: flex;
+            align-items: center;
+        }
+
+        #contactInfo .personal-info h1,
+        #contactInfo .personal-info p {
+            margin: 0;
+        }
+
+        #contactInfo .personal-info h1 {
+            margin-right: 10px;
+        }
+
+        #contactInfo .contact-details {
+            max-width: 300px;
+        }
+
+        #contactInfo .contact-details p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        /* education */
+        #education {
+            margin-top: 20px;
+        }
+
+        #education h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 2px solid #dda4a4;
+        }
+
+        .education-entry {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .college-info h3,
+        .college-info p {
+            margin: 0;
+            margin: 2px;
+        }
+
+        .date-info p {
+            margin: 0;
+            text-align: right;
+        }
+
+        .education-entry:last-child {
+            border-bottom: none;
+        }
+
+        /* awrds and hnrs */
+        #awrdAndHnrs {
+            margin-top: 20px;
+        }
+
+        #awrdAndHnrs h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 2px solid #dda4a4;
+        }
+
+        .awrd-entry {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .awrd-info h3,
+        .awrd-info p {
+            margin: 0;
+            margin: 2px;
+        }
+
+        .date-info p {
+            margin: 0;
+            text-align: right;
+        }
+
+        .awrd-entry:last-child {
+            border-bottom: none;
+        }
+
+        /* technial skills */
+        #tech {
+            margin-top: 20px;
+        }
+
+        #tech h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 2px solid #dda4a4;
+        }
+
+        .tech-entry {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .tech-info h3,
+        .tech-info p {
+            margin: 0;
+            margin: 2px;
+        }
+
+        .tech-entry:last-child {
+            border-bottom: none;
+        }
+
+        /* certification */
+        #cert {
+            margin-top: 20px;
+        }
+
+        #cert h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 2px solid #dda4a4;
+        }
+
+        .cert-entry {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .cert-info p {
+            margin: 0;
+            margin: 2px;
+        }
+
+        .date-info p {
+            margin: 0;
+            text-align: right;
+        }
+
+        .cert-entry:last-child {
+            border-bottom: none;
+        }
+
+         /* Personal Projects */
+         #projects {
+            margin-top: 20px;
+        }
+
+        #projects h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 2px solid #dda4a4;
+        }
+
+        .projects-entry {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .projects-info h3,
+        .projects-info p {
+            margin: 0;
+            margin: 2px;
+        }
+
+        .date-info p {
+            margin: 0;
+            text-align: right;
+        }
+
+        .projects-entry:last-child {
+            border-bottom: none;
+        }
+
+        .projects-info ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .projects-info ul li {
+            margin-bottom: 8px;
+        }
+
+        .projects-info ul li::before {
+            content: '\2022'; /* Unicode character for a bullet point */
+            color: #0c1d2f; /* You can change the color to your preference */
+            font-size: 1.2em;
+            display: inline-block;
+            width: 1em;
+            margin-left: 8px;
+        }
+
+        /* pos of responsibility */
+        #posRes {
+            margin-top: 20px;
+        }
+
+        #posRes h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 2px solid #dda4a4;
+        }
+
+        .posRes-entry {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .posRes-info p {
+            margin: 0;
+            margin: 2px;
+        }
+
+        .date-info p {
+            margin: 0;
+            text-align: right;
+        }
+
+        .posRes-entry:last-child {
+            border-bottom: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop id="myVideo">
+        <source src="bg2.mp4" type="video/mp4">
+    </video>
+
+    <div id="main-container">
+        <div id="contactInfo">
+            <div class="personal-info">
+                <img src="img.jpg" alt="Your Photo">
+                <div>
+                    <h1>Ajinkya Sharad Tambe</h1>
+                    <p>Pune, Maharashtra</p>
+                    <p>B. Tech in Computer Engineering</p>
+                    <p>Vishwakarma Institute of technology, Pune</p>
+                </div>
+            </div>
+            <div class="contact-details">
+                <p>Phone: +91 7720837166</p>
+                <p>Email: ajinkya.tambe22@vit.edu</p>
+            </div>
+        </div>
+
+        <!-- education -->
+        <div id="education">
+            <h1>Education</h1>
+            <hr>
+            <div class="education-entry">
+                <div class="college-info">
+                    <h3> Vishwakarma Institute of Technology, Pune</h3>
+                    <p>B.Tech in Computer Engineering (Pursuing</p>
+                </div>
+                <div class="date-info">
+                    <p>2022 - 2025</p>
+                </div>
+            </div>
+            <div class="education-entry">
+                <div class="college-info">
+                    <h3> Government Polytechnic, Pune</h3>
+                    <p>Diploma in Computer Engineering</p>
+                </div>
+                <div class="date-info">
+                    <p>2019 - 2022</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Awards and Honors -->
+        <div id="awrdAndHnrs">
+            <h1>Awards and Honors</h1>
+            <hr>
+            <div class="awrd-entry">
+                <div class="awrd-info">
+                    <p><b>First Runner-up</b> from West Region in Trident Hacks (National Hackatho)</p>
+                </div>
+                <div class="date-info">
+                    <p>May 2023</p>
+                </div>
+            </div>
+            <div class="awrd-entry">
+                <div class="awrd-info">
+                    <p><b>Honor Of Mention</b> for the innovative concept of SwasthyaHith</p>
+                </div>
+                <div class="date-info">
+                    <p>June 2023</p>
+                </div>
+            </div>
+            <div class="awrd-entry">
+                <div class="awrd-info">
+                    <p><b>Second Runner-up</b> for Smart Developer's Kit in Innovation EXPO (VIT, Pune)</p>
+                </div>
+                <div class="date-info">
+                    <p>Oct. 2023</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- technical skills -->
+        <div id="tech">
+            <h1>Technical Skills</h1>
+            <hr>
+            <div class="tech-entry">
+                <div class="tech-info">
+                    <p><b>Languages:   </b> Java, SQL, Python, HTML, CSS</p>
+                </div>
+            </div>
+            <div class="tech-entry">
+                <div class="tech-info">
+                    <p><b>Skills: </b> DBMS, OOP concepts, OS, Data Structure and Algorithms</p>
+                </div>
+            </div>
+            <div class="tech-entry">
+                <div class="tech-info">
+                    <p><b>Dev. Tools: </b> Oracle-SQL DEVELOPER, VS Code, Android Studio, Jupyter Notebook, Github</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- certification -->
+        <div id="cert">
+            <h1>Certification</h1>
+            <hr>
+            <div class="cert-entry">
+                <div class="cert-info">
+                    <p> Oracle Database 12c SQL Certified Associate 1Z0-071</p>
+                </div>
+                <div class="date-info">
+                    <p>Nov 2023</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div id="projects">
+            <h1>Personal Projects</h1>
+            <hr>
+            <div class="projects-entry">
+                <div class="projects-info">
+                    <h3> SwasthyaHith</h3>
+                    <p>HTML, CSS, JS, Firebase, NMC Doctor Verification API</p>
+                    <ul>
+                        <li> Aimed to digitize the current health infrastructure</li>
+                        <li> All the reports and prescriptions of the patient will be available to him/her without any physical file carrying them
+                            together</li>
+                        <li> Doctors will have full access to the patient's medical history and can also provide his/her prescription on the
+                            platform itself</li>
+                    </ul>                
+                </div>
+                <div class="date-info">
+                    <p>Apr. 2023</p>
+                </div>
+            </div>
+            <div class="projects-entry">
+                <div class="projects-info">
+                    <h3> Smart Developer’s Kit</h3>
+                    <p>IoT, Python, Arduino, NodeMCU</p> 
+                    <ul>
+                        <li> The purpose of this project was to solve the health-related issues developers face daily</li>
+                        <li> Consists of 3 modules: Smart Chair, Eye-to-Screen Distance Measurement module, Auto-brightness Module</li>
+                        <li> All the modules were functioning parallelly and the user was being warned on reaching some set parameters</li>
+                    </ul>               
+                </div>
+                <div class="date-info">
+                    <p>Mar. 2023 - May. 2023</p>
+                </div>
+            </div>
+            <div class="projects-entry">
+                <div class="projects-info">
+                    <h3> Console Based Exam System</h3>
+                    <p>Core Java</p>
+                    <ul>
+                        <li> Developed a Console Based Exam System using a three-tier architecture consisting of a UI, DTO, and DAO</li>
+                        <li> Each student was given randomly allocated multiple-choice questions (MCQs) from a pool of questions that were
+                            stored on local file system</li>
+                        <li> The system provided functionality for displaying questions, accepting user responses, and providing result at the
+                            end of the test</li>
+                        <li>Utilized core Java programming language to develop the entire project</li>
+                    </ul>
+                </div>
+                <div class="date-info">
+                    <p>Sep. 2021 - Jan. 2022</p>
+                </div>
+            </div>
+        </div>
+        
+        
+    <!-- position of responsibility -->
+
+        <div id="posRes">
+            <h1>Position of Responsibility</h1>
+            <hr>
+            <div class="posRes-entry">
+                <div class="posRes-info">
+                    <p> <b>Java Domain Head, </b> GedIT</p>
+                </div>
+                <div class="date-info">
+                    <p>July 2023 - Present</p>
+                </div>
+            </div>
+            <div class="posRes-entry">
+                <div class="posRes-info">
+                    <p> <b>Event Head, </b> EPEC</p>
+                </div>
+                <div class="date-info">
+                    <p>Dec 2022</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

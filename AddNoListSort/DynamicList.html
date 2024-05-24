@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* Add your custom styles here */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            margin-top: 20px;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+
+        .list-group-item.active {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+
+        .list-group-item.active:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        #numberList {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #sortedNumbers {
+            margin-top: 10px;
+        }
+
+    </style>
+    <title>Number List Manager</title>
+</head>
+
+<body>
+    <h1 style="display: flex; align-items: center; justify-content: center; margin: 20px;">Dynamic List and Sorting the List</h1>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="numberInput">Enter Number:</label>
+                    <input type="text" class="form-control" id="numberInput" placeholder="Enter a number">
+                </div>
+                <button class="btn btn-primary" onclick="addNumber()">Add</button>
+                <button class="btn btn-danger" id="clearButton" onclick="clearList()">Clear</button>
+            </div>
+            <div class="col-md-4">
+                <label>Number List:</label>
+                <ul id="numberList" class="list-group">
+                </ul>
+                <button class="btn btn-warning mt-2" id="sortButton" onclick="sortSelected()">Sort Selected</button>
+            </div>
+            <div class="col-md-4">
+                <label>Sorted Numbers:</label>
+                <input type="text" class="form-control" id="sortedNumbers" readonly>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var clearButton = document.getElementById('clearButton');
+            clearButton.style.display = 'none';
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var sortButton = document.getElementById('sortButton');
+            sortButton.style.display = 'none';
+        });
+
+        function addNumber() {
+            var numberInput = document.getElementById('numberInput');
+            var number = numberInput.value.trim();
+
+            // Check if the input is a valid number
+            if (!isNaN(number) && number !== '') {
+                var numberList = document.getElementById('numberList');
+                var listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.innerHTML = `<input type="checkbox" class="form-check-input" id="checkbox_${number}" onclick="handleCheckboxClick(this)">
+                            <label class="form-check-label" for="checkbox_${number}">${number}</label>`;
+                listItem.onclick = function () {
+                    alert('Clicked on: ' + number);
+                };
+
+                numberList.appendChild(listItem);
+                alert('Number added: ' + number);
+                numberInput.value = '';
+
+                // Show the clear button
+                updateClearButtonVisibility();
+            } else {
+                alert('Please enter a valid number.');
+            }
+        }
+
+
+        function clearList() {
+            var numberList = document.getElementById('numberList');
+            numberList.innerHTML = '';
+
+            var sortedList = document.getElementById('sortedNumbers');
+            sortedList.value = '';
+
+            // Hide the clear button
+            updateClearButtonVisibility();
+        }
+
+        function handleCheckboxClick(checkbox) {
+            var listItem = checkbox.parentElement;
+            listItem.classList.toggle('active', checkbox.checked);
+
+            // Show or hide the sort button based on the number of selected items
+            updateSortButtonVisibility();
+        }
+
+        function updateClearButtonVisibility() {
+            var clearButton = document.getElementById('clearButton');
+            var numberList = document.getElementById('numberList');
+            clearButton.style.display = numberList.children.length > 0 ? 'block' : 'none';
+        }
+
+        function updateSortButtonVisibility() {
+            var sortButton = document.getElementById('sortButton');
+            var numberList = document.getElementById('numberList');
+            var selectedCount = 0;
+
+            for (var i = 0; i < numberList.children.length; i++) {
+                var listItem = numberList.children[i];
+                if (listItem.classList.contains('active')) {
+                    selectedCount++;
+                }
+            }
+
+            sortButton.style.display = selectedCount > 1 ? 'block' : 'none';
+        }
+
+        function sortSelected() {
+            var selectedNumbers = [];
+            var numberList = document.getElementById('numberList');
+
+            for (var i = 0; i < numberList.children.length; i++) {
+                var listItem = numberList.children[i];
+                if (listItem.classList.contains('active')) {
+                    selectedNumbers.push(parseInt(listItem.innerText));
+                }
+            }
+            console.log(selectedNumbers);
+            bubbleSort(selectedNumbers);
+
+            document.getElementById('sortedNumbers').value = selectedNumbers.join(', ');
+        }
+
+        function bubbleSort(arr) {
+            var len = arr.length;
+            for (var i = 0; i < len - 1; i++) {
+                for (var j = 0; j < len - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        var temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

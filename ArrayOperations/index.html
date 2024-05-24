@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Operations</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        .btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .myBtn {
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px;
+            font-size: 20px;
+            margin-bottom: 20px;
+
+            border-color: #334151;
+            color: #fff;
+            box-shadow: 0 0 40px 40px #334151 inset, 0 0 0 0 #334151;
+            transition: all 150ms ease-in-out;
+
+            &:hover {
+                box-shadow: 0 0 10px 0 #334151 inset, 0 0 10px 4px #334151;
+            }
+        }
+
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        .mt-5 {
+            position: relative;
+            width: 80%;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            z-index: 1;
+            border-radius: 20px;
+            height: 80vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video autoplay muted loop id="myVideo" style="opacity: 0.8;">
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+
+    <div class="container mt-5">
+        <h2 style="align-items: center; justify-content: center; display: flex;">Array Operations</h2>
+
+        <!-- a. Integer Array Operations -->
+        <div class="mt-4">
+            <h4>Integer Array Operations</h4>
+            <label for="integerArray">Enter integers (comma-separated): </label>
+            <input type="text" id="integerArray" class="form-control mb-2">
+            <div class="btns">
+                <button class="btn myBtn" onclick="performIntegerSorting()">Sort Array</button>
+                <button class="btn myBtn" onclick="performIntegerSearching()">Search Value</button>
+                <button class="btn myBtn" onclick="cleanList()">Clear</button>
+            </div>
+            <div id="integerResult" class="mt-3"></div>
+        </div>
+
+        <!-- b. Entity Array Operations -->
+        <div class="mt-4">
+            <h4>Named Entity Array Operations</h4>
+            <label for="entityArray">Enter named entities (comma-separated): </label>
+            <input type="text" id="entityArray" class="form-control mb-2">
+            <div class="btns">
+                <button class="btn myBtn" onclick="performEntitySearching()">Search Entity</button>
+                <button class="btn myBtn" onclick="cleanNames()">Clear</button>
+            </br>
+                <div id="entityResult" class="mt-3"></div>
+            </div>
+
+
+           
+        </div>
+    </div>
+
+    <!--js -->
+    <script>
+
+        function cleanList() {
+            var inputField = document.getElementById('integerArray');
+            inputField.value = '';
+
+            var getDiv = document.getElementById('integerResult');
+            getDiv.innerHTML = '';
+        }
+
+        function cleanNames() {
+            var entitiesInput = document.getElementById('entityArray');
+            entitiesInput.value = '';
+
+            var entityResult = document.getElementById('entityResult');
+            entityResult.innerHTML = '';
+        }
+
+        function performIntegerSorting() {
+            const inputArray = document.getElementById('integerArray').value.split(',').map(Number);
+
+            for (let i = 0; i < inputArray.length - 1; i++) {
+                for (let j = 0; j < inputArray.length - i - 1; j++) {
+                    if (inputArray[j] > inputArray[j + 1]) {
+                        const temp = inputArray[j];
+                        inputArray[j] = inputArray[j + 1];
+                        inputArray[j + 1] = temp;
+                    }
+                }
+            }
+            document.getElementById('integerResult').innerHTML = `
+        <p>Sorted Array: [${inputArray.join(', ')}]</p>
+    `;
+        }
+
+        function performIntegerSearching() {
+            const inputArray = document.getElementById('integerArray').value.split(',').map(Number);
+
+            const searchValue = parseInt(prompt("Enter the integer to search:"));
+            const foundIndex = inputArray.indexOf(searchValue);
+
+            document.getElementById('integerResult').innerHTML = `
+            <p>Index of ${searchValue}: ${foundIndex !== -1 ? foundIndex : 'Not found'}</p>
+        `;
+        }
+
+        function performEntitySearching() {
+            const inputArray = document.getElementById('entityArray').value.split(',');
+
+            for (let i = 0; i < inputArray.length; i++) {
+                inputArray[i] = inputArray[i].trim();
+            }
+
+            const searchEntity = prompt("Enter the entity to search:");
+            searchEntity.trim();
+            const foundIndex = inputArray.indexOf(searchEntity);
+            alert("Index of " + searchEntity + " is: " + foundIndex);
+
+        //     document.getElementById('entityResult').innerHTML =`
+        //     <p>Index of ${searchEntity}: ${foundIndex !== -1 ? foundIndex : 'Not found'}</p>
+        // `;
+        }
+    </script>
+
+</body>
+
+</html>
